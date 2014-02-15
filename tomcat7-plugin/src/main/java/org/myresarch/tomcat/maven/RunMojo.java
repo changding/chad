@@ -48,6 +48,8 @@ public class RunMojo extends AbstractTomcatMojo {
 		} catch (Exception e) {
 			throw new MojoExecutionException("run tomcat error", e);
 		}
+		//加上一个钩子
+		Runtime.getRuntime().addShutdownHook(new Thread(new CleanThread(catalinaBase)));
 	}
 
 	protected void deployWebapp() {
@@ -67,4 +69,28 @@ public class RunMojo extends AbstractTomcatMojo {
 		}
 	}
 
+}
+
+class CleanThread implements Runnable{
+	private File catalinaBase;
+	CleanThread(File catalinaBase){
+		this.catalinaBase = catalinaBase;
+	}
+
+	@Override
+	public void run() {
+		if (catalinaBase.exists()) {
+			try {
+				FileUtils.forceDelete(catalinaBase);
+			} catch (IOException e) {
+				try {
+					throw new MojoExecutionException("delete catalina.base failed: " + catalinaBase);
+				} catch (MojoExecutionException e1) {
+					//ignore
+				}
+			}
+		}
+		
+	}
+	
 }
