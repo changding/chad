@@ -1,5 +1,10 @@
 package com.myrearch;
 
+import java.io.IOException;
+
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -34,5 +39,9 @@ public class AppTest
     public void testApp()
     {
         assertTrue( true );
+    }
+    public void test_获取资源() throws IOException{
+    	PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+    	resolver.getResources("classpath*:/xxx/*.properties");
     }
 }
