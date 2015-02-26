@@ -40,8 +40,4 @@ public class AppTest
     {
         assertTrue( true );
     }
-    public void test_获取资源() throws IOException{
-    	PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-    	resolver.getResources("classpath*:/xxx/*.properties");
-    }
 }
